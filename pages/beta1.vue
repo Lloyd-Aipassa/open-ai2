@@ -1,6 +1,6 @@
 <template>
   <div class="chat-container">
-    <p v-if="vraag">stel een vraag als <i>"Analyseer de doelgroep voor een senior Java developer in Amsterdam."</i> </p>
+    <p>stel een vraag als <i>"Analyseer de doelgroep voor een senior Java developer in Amsterdam."</i> </p>
     <div class="input-area">
       <input v-model="userInput" @keyup.enter="sendMessage" id="userInput" placeholder="Stel een vraag..." class="input" />
       <button @click="sendMessage" class="button">Stuur</button>
@@ -11,27 +11,22 @@
         <img src="/NewLogoRS.svg" width="200px" class="loading" alt="logo" />
       </div>
     </div>
-    <!-- <pre v-else id="chatResponse" class="response">{{ chatResponse }}</pre> -->
-    <div v-else id="chatResponse" class="response" v-html="renderedResponse"></div>
+    <pre v-else id="chatResponse" class="response">{{ chatResponse }}</pre>
   </div>
 </template>
 
 <script setup>
-import MarkdownIt from 'markdown-it';
-
-const md = new MarkdownIt();
-const chatResponse = ref('');
-const vraag = ref('true');
-const renderedResponse = computed(() => md.render(chatResponse.value));
-
 const userInput = ref('');
+const chatResponse = ref('');
 const isLoading = ref(false);
 
 // Chat geschiedenis
 const chatHistory = ref([
   {
     role: 'system',
-    content: `Je bent een senior recruitment data-analist en arbeidsmarktstrateeg. Je volgt de vaste structuur van doelgroepanalyse in 11 onderdelen en geeft 10 sourcingstrategieën. Je taalgebruik is professioneel, analytisch maar vlot en begrijpelijk.`,
+    content: `Je bent een senior recruitment data-analist en arbeidsmarktstrateeg. 
+Je volgt de vaste structuur van doelgroepanalyse in 11 onderdelen en geeft 10 sourcingstrategieën. 
+Je taalgebruik is professioneel, analytisch maar vlot en begrijpelijk.`,
   },
 ]);
 
@@ -39,7 +34,6 @@ const sendMessage = async () => {
   if (!userInput.value.trim()) return;
 
   isLoading.value = true;
-  vraag.value = false;
 
   // Voeg vraag van gebruiker toe aan gespreksgeschiedenis
   chatHistory.value.push({ role: 'user', content: userInput.value });
@@ -78,22 +72,6 @@ const sendMessage = async () => {
 </script>
 
 <style scoped>
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 20px;
-}
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #1d1d1d;
-  font-family: Arial, sans-serif;
-}
 .chat-container {
   max-width: 800px;
   margin: 0 auto;
@@ -127,12 +105,11 @@ h6 {
 }
 
 .response {
+  white-space: pre-wrap;
   background-color: #f5f5f5;
   padding: 15px;
   border-radius: 4px;
   min-height: 100px;
-  color: #1d1d1d;
-  font-family: Arial, sans-serif;
 }
 
 .container {

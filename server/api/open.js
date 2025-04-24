@@ -1,4 +1,4 @@
-import { defineEventHandler, readBody } from 'h3';
+// import { defineEventHandler, readBody } from 'h3';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
@@ -11,7 +11,11 @@ export default defineEventHandler(async (event) => {
         Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'gpt-3.5-turbo',
+        // model: 'gpt-3.5-turbo',
+        // model: 'gpt-4.1-mini',
+        // model: 'GPT-4o Mini',
+
+        model: 'gpt-4.1',
         messages: body.messages,
       }),
     });
